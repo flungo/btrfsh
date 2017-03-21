@@ -1,0 +1,25 @@
+#!/bin/bash
+
+BTRFSH_DEFAULTS=/etc/default/btrfsh
+if [ -e "${BTRFSH_DEFAULTS}" ]; then
+  source "${BTRFSH_DEFAULTS}"
+fi
+
+BTRFSH_DIR="$(readlink -f "$(dirname "${BASH_SOURCE[0]}")")"
+
+source "${BTRFSH_DIR}/common.sh"
+
+usage() {
+  echo "Usage: btrfsh subvolume backup ..."
+}
+
+# Determine the command
+case "$1" in
+  subvolume)
+    shift
+    source "${BTRFSH_DIR}/subvolume.sh"
+    ;;
+  *)
+    >&2 usage
+    ;;
+esac
